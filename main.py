@@ -1,3 +1,4 @@
+from multiprocessing import process
 import os
 from typing import List, Dict, Any, Literal, Optional
 from dataclasses import dataclass
@@ -29,12 +30,12 @@ def init_session_state():
     """Initialize session state variables"""
     # --- CHANGED: Renamed key to google_api_key ---
     if 'google_api_key' not in st.session_state:
-        st.session_state.google_api_key = "AIzaSyAQCYPA5TzJcduAtnwDweRyk3XRYjj92bw"
+        st.session_state.google_api_key = os.getenv("GOOGLE_API_KEY", "")
     # ----------------------------------------------
     if 'qdrant_url' not in st.session_state:
         st.session_state.qdrant_url = "https://e78132e6-03e2-434b-97d4-9558379ca4ec.europe-west3-0.gcp.cloud.qdrant.io"
     if 'qdrant_api_key' not in st.session_state:
-        st.session_state.qdrant_api_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.1GH8LOO4I-ScmSexDTN5xbOfMwNbmRyTD0sLYRbHgoU"
+        st.session_state.qdrant_api_key = os.getenv("QUADRANT_API_KEY", "")
     if 'embeddings' not in st.session_state:
         st.session_state.embeddings = None
     if 'llm' not in st.session_state:
@@ -83,7 +84,7 @@ def initialize_models():
         
         # --- CHANGED: Initialize Google Embeddings and Chat Model ---
         st.session_state.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-        st.session_state.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+        st.session_state.llm = ChatGoogleGenerativeAI(model="gemini-2.5-pro", temperature=0)
         # ------------------------------------------------------------
         
         try:
@@ -150,7 +151,7 @@ def create_routing_agent() -> Agent:
     return Agent(
         # --- CHANGED: Use Gemini model for routing ---
         model=Gemini(
-            id="gemini-1.5-flash",
+            id="gemini-2.5-pro",
             api_key=st.session_state.google_api_key
         ),
         # ---------------------------------------------
