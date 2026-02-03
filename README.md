@@ -67,3 +67,17 @@ The pipeline follows a multi-stage process:
        VECTOR_STORE_API=your_vector_key
 
 ---
+## 📊 Performance & Routing Logic Table
+
+
+| Query Type | Destination | Methodology |
+| :--- | :--- | :--- |
+| **"What was the total revenue in Q3?"** |SQL Database| Text-to-SQL Conversion |
+| **"Explain the company policy on remote work."** | Vector Store | Semantic Embedding Search|
+| **"Who is the CEO?"** | Knowledge Graph | Relationship Mapping|
+| **"Hello, how are you?"** | LLM Chat | Direct Response (No Retrieval) |
+
+---
+
+## License
+Maintained By [shu7620](https://github.com/shu7620)
